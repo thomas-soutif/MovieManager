@@ -1,0 +1,14 @@
+version: '3'
+services:
+ django:
+      build:
+       context: ./django/
+       dockerfile: Dockerfile
+      container_name: Django-app
+      volumes:
+       - ./django/src/:/app/
+      ports:
+       - 8000:8000
+      tty: true
+      command: "gunicorn -b 0.0.0.0:8000 movie_app.wsgi:application"
+
