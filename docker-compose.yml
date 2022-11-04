@@ -12,3 +12,21 @@ services:
       tty: true
       command: "gunicorn -b 0.0.0.0:8005 --reload movie_app.wsgi:application"
 
+ postgres:
+    image: postgres:15.0
+    restart: always
+    env_file:
+      - ./django/.env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+
+
+volumes:
+  pg-data:
