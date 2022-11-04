@@ -4,7 +4,7 @@ services:
       build:
        context: ./django/
        dockerfile: Dockerfile
-      container_name: Django-app
+      container_name: moviemanager_django_app
       volumes:
        - ./django/src/:/app/
       ports:
