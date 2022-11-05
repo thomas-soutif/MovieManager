@@ -1,12 +1,12 @@
 version: '3.8'
 services:
- django:
+ django_project:
       build:
-       context: ./django/
+       context: ./django_project/
        dockerfile: Dockerfile
       container_name: moviemanager_django_app
       volumes:
-       - ./django/src/:/app/
+       - ./django_project/src/:/app/
       ports:
        - 8005:8005
       tty: true
