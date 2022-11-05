@@ -11,18 +11,24 @@ services:
        - 8005:8005
       tty: true
       #command: "gunicorn -b 0.0.0.0:8005 --reload movie_app.wsgi:application"
-      command: "python manage.py runserver 0.0.0.0:8005"
+      command: sh -c "/wait && /launch_django_server"
+      environment:
+          - WAIT_HOSTS=postgres:5432
+          - WAIT_HOSTS_TIMEOUT=30
+          - WAIT_SLEEP_INTERVAL=1
+          - WAIT_HOST_CONNECT_TIMEOUT=3
       depends_on:
         - postgres
+
  postgres:
     image: postgres:15.0
     restart: always
     env_file:
       - .env
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=totolastico
+      - POSTGRES_PASSWORD=4AL5DxL9!iW
+      - POSTGRES_DB=movie_manager
     volumes:
       - pg-data:/var/lib/postgresql/data
     ports:
