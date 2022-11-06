@@ -34,5 +34,19 @@ services:
     ports:
       - '5432:5432'
 
+
+ vuesjs_project:
+   build:
+     context: ./vuejs_project/
+     dockerfile: Dockerfile
+   container_name: moviemanager_vuesjs_app
+   volumes:
+     - ./vuejs_project/movie_manager_app/:/app/
+   command: sh -c "/launch_vuesjs_dev" #for now we launch the dev environnement
+   tty: true
+   ports:
+      - '8100:8080'
+   expose:
+     - "8100" #ports for dev for now
 volumes:
   pg-data:
