@@ -2,6 +2,7 @@ from rest_framework import viewsets
 
 from movie_app.api.serializers import ActorSerializer, MovieSerializer, ReviewSerializer
 from movie_app.models import Actor, Movie, Review
+from rest_framework.pagination import LimitOffsetPagination
 
 
 class ActorViewSet(viewsets.ModelViewSet):
@@ -26,3 +27,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
     """
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    pagination_class = LimitOffsetPagination
+
+
