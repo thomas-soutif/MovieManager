@@ -9,6 +9,7 @@ services:
        - ./django_project/src/:/app/
       ports:
        - 8005:8005
+      restart: always
       tty: true
       #command: "gunicorn -b 0.0.0.0:8005 --reload movie_app.wsgi:application"
       command: sh -c "/wait && /launch_django_server"
