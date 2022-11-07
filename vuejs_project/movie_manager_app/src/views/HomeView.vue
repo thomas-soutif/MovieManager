@@ -37,9 +37,11 @@ import axios from 'axios';
     components: {
       Movie
     },
-    async mounted() {
+    mounted() {
       this.movieService = new MoviesService(this.limit)
       this.getMovies()
+
+
     },
     methods: {
       getOffSet : function (){

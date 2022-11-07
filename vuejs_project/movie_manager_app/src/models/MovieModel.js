@@ -13,6 +13,13 @@ class MovieModel{
     getTitle(){
         return this.title;
     }
+    getAllFullNameActors(){
+        let finale_string= ""
+        this.actors.forEach(actor => {
+            finale_string += actor.getFullName() + ", "
+        });
+        return finale_string;
+    }
 }
 
 export default MovieModel;

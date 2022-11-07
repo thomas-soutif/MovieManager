@@ -10,16 +10,7 @@ export default new Vuex.Store({
   },
   getters: {
     getMovie : (state) => (id) => {
-      let movie = state.all_movies.find(movie => movie.id === id);
-      if (movie != null) {
-        return movie;
-      }
-      //If the movie is not found, we try to fetch it from the API
-      let movie_service = new MoviesService()
-      movie_service.getMovie(id).then(movie => {
-        state.all_movies.push(movie);
-        return movie;
-      });
+      return state.all_movies.find(movie => movie.id === id)
     },
     get_all_movies: (state) => {
       return state.all_movies;
