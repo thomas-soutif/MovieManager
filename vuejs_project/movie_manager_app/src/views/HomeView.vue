@@ -9,7 +9,7 @@
   >
     <v-list-item link :to="{'name' : 'movie', 'params' : {id : movie.id}}">
       <v-list-item-content>
-        <v-list-item-title>{{movie.title}}</v-list-item-title>
+        <v-list-item-title>{{movie.getTitle()}}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
 
@@ -40,25 +40,22 @@ import axios from 'axios';
     },
     async mounted() {
       this.movieService = new MoviesService(this.limit)
-      try{
-        this.movies = await this.movieService.getAllMovies(this.getOffSet());
-        console.log(this.movies)
-      }catch (err){
-        console.log(err);
-      }
+      this.getMovies()
     },
     methods: {
       getOffSet : function (){
         return (this.page - 1) * this.limit;
       },
+      getMovies: function (){
+        this.movieService.getAllMovies(this.getOffSet()).then((movies) => {
+          this.movies = movies;
+          console.log(this.movies)
+        });
+      }
     },
     watch :{
       page : function (){
-        console.log("hey")
-        this.movieService.getAllMovies(this.getOffSet()).then((movies) => {
-          console.log(movies)
-          this.movies = movies;
-        });
+        this.getMovies()
       }
     }
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import HOST from "../../services.config";
+import MovieModel from "@/models/MovieModel";
 
 class MoviesService {
     constructor(limit) {
@@ -10,8 +11,20 @@ class MoviesService {
         return new Promise(async (resolve, reject) => {
             try {
                 const res = await axios.get(self.url + "?limit=" + self.limit + "&offset=" + offset);
+                // We cast the data with our own MovieModel class
+                resolve(res.data.results.map((movie) => new MovieModel(movie)))
+            }catch (err){
+                reject(err)
+            }
+        });
+    }
 
-                resolve(res.data.results)
+    getMovie(id){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await axios.get(self.url + "/" + id);
+                // We cast the data with our own MovieModel class
+                resolve(new MovieModel(res.data))
             }catch (err){
                 reject(err)
             }
