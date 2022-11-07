@@ -12,7 +12,6 @@
         <v-list-item-title>{{movie.getTitle()}}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-
   </v-card>
   <v-pagination
       v-model="page"
@@ -50,12 +49,18 @@ import axios from 'axios';
         this.movieService.getAllMovies(this.getOffSet()).then((movies) => {
           this.movies = movies;
           console.log(this.movies)
+          this.updateMoviesInStore()
         });
+      },
+      updateMoviesInStore: function () {
+        this.$store.dispatch('updateListMovie', this.movies);
       }
     },
     watch :{
       page : function (){
         this.getMovies()
+        console.log("store", this.$store.state.all_movies)
+
       }
     }
 
