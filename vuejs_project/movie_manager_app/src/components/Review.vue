@@ -5,7 +5,7 @@ import Vue from 'vue';
 
   <v-list-item>
     <v-list-item-content>
-      <v-list-item-title>Moovie Name here{{moovie}}</v-list-item-title>
+      <v-list-item-title>{{movie.title}}</v-list-item-title>
     </v-list-item-content>
   </v-list-item>
 
@@ -28,7 +28,7 @@ import Vue from 'vue';
 <script>
 export default {
   name: "Review",
-  props:['moovie','grade'],
+  props:['movie','grade'],
   data: () => ({
 
   }),

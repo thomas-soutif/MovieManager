@@ -8,7 +8,7 @@
      v-for="review in reviews"
   >
     <v-list-item link>
-      <Review :grade="review.grade" :moovie="review.moovie"></Review>
+      <Review :grade="review.grade" :movie="review.movie"></Review>
     </v-list-item>
 
   </v-card>
