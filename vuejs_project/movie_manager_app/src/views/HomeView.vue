@@ -1,14 +1,16 @@
 <template>
 <div>
   <v-card
-      v-if="reviews.length"
+      v-if="movies.length"
     class="mx-auto"
     max-width="400"
     tile
-     v-for="review in reviews"
+     v-for="movie in movies"
   >
-    <v-list-item link>
-      <Review :grade="review.grade" :movie="review.movie"></Review>
+    <v-list-item link :to="{'name' : 'movie', 'params' : {id : movie.id}}">
+      <v-list-item-content>
+        <v-list-item-title>{{movie.title}}</v-list-item-title>
+      </v-list-item-content>
     </v-list-item>
 
   </v-card>
@@ -21,27 +23,26 @@
 </template>
 import axios from 'axios';
 <script>
-  import HelloWorld from '../components/HelloWorld'
-  import MoviesReviewService from "@/services/MoviesReviewService";
-  import axios from "axios";
-  import Review from "@/components/Review";
+
+  import MoviesService from "@/services/MovieService";
+  import Movie from "@/components/Movie";
 
   export default {
     name: 'Home',
     data: () => ({
-      reviews: [],
+      movies: [],
       limit: 2,
-      movieReviewService: null,
+      movieService: null,
       page: 1,
     }),
     components: {
-      Review
+      Movie
     },
     async mounted() {
-      this.movieReviewService = new MoviesReviewService(this.limit)
+      this.movieService = new MoviesService(this.limit)
       try{
-        this.reviews = await this.movieReviewService.getAllReviews(this.getOffSet());
-        console.log(this.reviews)
+        this.movies = await this.movieService.getAllMovies(this.getOffSet());
+        console.log(this.movies)
       }catch (err){
         console.log(err);
       }
@@ -54,9 +55,9 @@ import axios from 'axios';
     watch :{
       page : function (){
         console.log("hey")
-        this.movieReviewService.getAllReviews(this.getOffSet()).then((reviews) => {
-          console.log(reviews)
-          this.reviews = reviews;
+        this.movieService.getAllMovies(this.getOffSet()).then((movies) => {
+          console.log(movies)
+          this.movies = movies;
         });
       }
     }
