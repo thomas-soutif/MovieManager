@@ -30,14 +30,15 @@ import axios from 'axios';
     name: 'Home',
     data: () => ({
       reviews: [],
-      limit: 1,
-      movieReviewService: new MoviesReviewService(1),
+      limit: 2,
+      movieReviewService: null,
       page: 1,
     }),
     components: {
       Review
     },
     async mounted() {
+      this.movieReviewService = new MoviesReviewService(this.limit)
       try{
         this.reviews = await this.movieReviewService.getAllReviews(this.getOffSet());
         console.log(this.reviews)
