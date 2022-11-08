@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
@@ -26,6 +27,8 @@ class Movie(models.Model):
             grade_sum += review.grade
         return grade_sum / len(reviews)
 
+
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="reviews")
-    grade = models.IntegerField(help_text="Enter a grade between 1 and 5")
+    grade = models.IntegerField(help_text="Enter a grade between 1 and 5",
+                                validators=[MinValueValidator(1), MaxValueValidator(5)])
