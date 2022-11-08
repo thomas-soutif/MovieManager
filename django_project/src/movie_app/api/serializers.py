@@ -18,10 +18,13 @@ class MovieSerializer(serializers.ModelSerializer):
     Serializer for the Movie model
     """
     actors = ActorSerializer(many=True, required=True)
+    average_grade = serializers.SerializerMethodField()
 
+    def get_average_grade(self, obj):
+        return obj.getReviewGradeAverage()
     class Meta:
         model = Movie
-        fields = "__all__"
+        fields = ["id", "title", "description", "actors", "average_grade"]
 
 
 class ReviewSerializer(serializers.ModelSerializer):
