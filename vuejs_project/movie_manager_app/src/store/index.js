@@ -39,7 +39,11 @@ export default new Vuex.Store({
         commit('updateMovie',movie)
       })
     },
+    updateMovie({commit}, movie) {
+      commit('updateMovie',movie)
     },
+    },
+
     modules: {
   },
 

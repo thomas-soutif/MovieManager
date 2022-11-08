@@ -63,11 +63,14 @@ export default {
       let movie_service = new MovieService();
       movie_service.patchMovieAttributes(this.movie.id, payload.name, payload.value).then((movie) => {
         this.movie = movie
+        //Update the movie in the store
+        this.$store.dispatch('updateMovie', movie)
       }).catch((err) => {
-        console.log(err.response)
+        console.log(err)
       });
 
-    }
+    },
+
   }
 }
 </script>
