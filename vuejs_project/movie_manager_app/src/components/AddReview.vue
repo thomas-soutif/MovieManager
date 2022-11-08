@@ -3,20 +3,18 @@ import Vue from 'vue';
 
 <div>
 
-  <v-list-item>
-    <v-list-item-content>
-      <v-list-item-title>{{movie.title}}</v-list-item-title>
-    </v-list-item-content>
-  </v-list-item>
-
-  <v-list-item two-line>
-    <v-list-item-content>
-      <v-list-item-title>Grade</v-list-item-title>
-      <v-list-item-subtitle>{{ grade }}</v-list-item-subtitle>
-    </v-list-item-content>
-  </v-list-item>
-
-
+  <v-text-field
+      v-model="grade"
+      label="Rating"
+      type="number"
+      min="1"
+      max="5"
+      required>
+  </v-text-field>
+  <v-btn
+      color="success"
+      class="mt-5"
+      @click="emitReview">Ajouter la note</v-btn>
 
 
 </div>
@@ -26,13 +24,18 @@ import Vue from 'vue';
 </template>
 
 <script>
+
 export default {
-  name: "Review",
-  props:['movie','grade'],
+  name: "AddReview",
+  props:[],
   data: () => ({
-
+    grade : null
   }),
-
+  methods:{
+    emitReview(){
+      this.$emit('review-submitted', this.grade)
+    }
+  }
 
 }
 </script>

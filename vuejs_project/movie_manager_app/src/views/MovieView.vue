@@ -17,21 +17,31 @@
       </Movie>
 
     </v-card>
+    <br/>
+    <v-card class="ma-auto"
+        max-width="400"
+        tile>
 
+      <v-card-title> Ajouter une note </v-card-title>
+        <AddReview @review-submitted="addAReview"></AddReview>
+    </v-card>
   </div>
 </template>
 
 <script>
 import Movie from "@/components/Movie";
 import MovieService from "@/services/MovieService";
+import AddReview from "@/components/AddReview";
+import ReviewService from "@/services/ReviewService";
 
 export default {
   name: "MovieView",
-  components: {Movie},
+  components: {Movie, AddReview},
   data: () => ({
     movieId: null,
     movie: null,
     prevRoute: null,
+    movie_service : new MovieService()
   }),
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -44,24 +54,13 @@ export default {
 
     if (this.movie == null) {
       //If the movie have not been found in the store, we get it from the API
-      let movie_service = new MovieService();
-      movie_service.getMovie(this.movieId).then((movie) => {
-        this.movie = movie;
-      }).catch((err) => {
-        if (err.response.status === 404) {
-          //If the movie have not been found in the API, we redirect to the home page
-          this.$router.push({name: 'home'});
-        } else {
-          //We could display that an technical error has occurred
-        }
-      });
+      this.getMovie(this.movieId)
     }
 
   },
   methods: {
     updateMovieDetails: function (payload) {
-      let movie_service = new MovieService();
-      movie_service.patchMovieAttributes(this.movie.id, payload.name, payload.value).then((movie) => {
+      this.movie_service.patchMovieAttributes(this.movie.id, payload.name, payload.value).then((movie) => {
         this.movie = movie
         //Update the movie in the store
         this.$store.dispatch('updateMovie', movie)
@@ -70,6 +69,26 @@ export default {
       });
 
     },
+    addAReview : function (grade){
+      let review_service = new ReviewService();
+      review_service.postGradeForMovie(this.movie.id,grade).then((review) => {
+        this.getMovie(this.movieId)
+      }).catch((err) => {
+        console.log(err)
+      });
+    },
+    getMovie: function (id){
+      let movie_service = new MovieService();
+        movie_service.getMovie(id).then((movie) => {
+          this.movie = movie;
+          this.updateMovieInStore(this.movie)
+        }).catch((err) => {
+          console.log(err)
+        });
+      },
+    updateMovieInStore: function (movie) {
+      this.$store.dispatch('updateMovie', movie);
+    }
 
   }
 }

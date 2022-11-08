@@ -6,18 +6,24 @@ class ReviewService{
         self.url = HOST + 'api/reviews';
         self.limit = limit;
     }
-    getAllReviews(offset){
-        return new Promise(async (resolve, reject) => {
-            try {
-                const res = await axios.get(self.url + "?limit=" + self.limit + "&offset=" + offset);
 
-                resolve(res.data.results)
+    postGradeForMovie(movie_id, grade) {
+        return new Promise(async (resolve, reject) => {
+            if(movie_id === undefined || grade === undefined) {
+                reject("Invalid arguments");
+            }
+            try {
+                const res = await axios.post(self.url +"/", {
+                    movie: movie_id,
+                    grade: grade
+                });
+                resolve(res.data)
             }catch (err){
                 reject(err)
             }
         });
-    }
 
+    }
 }
 
 export default ReviewService
