@@ -532,6 +532,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 17	auth	0012_alter_user_first_name_max_length	2022-11-06 13:56:46.42069+00
 18	movie_app	0001_initial	2022-11-06 13:56:46.504649+00
 19	sessions	0001_initial	2022-11-06 13:56:46.537952+00
+20	movie_app	0002_alter_review_movie	2022-11-08 15:19:53.173426+00
+21	movie_app	0003_alter_review_grade	2022-11-08 15:19:53.179989+00
 \.
 
 
@@ -561,6 +563,28 @@ COPY public.movie_app_movie (id, title, description) FROM stdin;
 1	regfef	erfrefefe
 2	regfefererfre	erfrefefeefrfrefrefer
 3	zefrfre	frzefrefre
+4	Pdedezdzejdfjzedfzeldfnze	dedededededede
+5	dAdezdzedzed	dedededededede
+6	Pdfezlkfnzef,zef	dedededededede
+7	Pdfezlkzefzef,zef	dedededededede
+25	fzrefergrefr	dedededededede
+8	regf'trefdscrefgrfgrefrefref	dedededededede
+9	refrg'étzerfdaezfazfzref	dedededededede
+10	poiutyrgfvdytrgb	dedededededede
+11	iuiyjhtgfdsc	dedededededede
+12	gfdfgtrhrgfdsgrergf	dedededededede
+13	ouiythgfbdv	dedededededede
+14	kjhgfrergtyjy	dedededededede
+15	vferfgverfvdrefd	dedededededede
+16	ver vndl,fmerefrvfe	dedededededede
+17	mlkjhhjhb kn,k	dedededededede
+18	cnvjrznd kmzej,kcfmldscdsc	dedededededede
+19	mlkn, bisfjnvd,ck;sdszx	dedededededede
+20	^mlkjhbdjfnvksdqscvf	dedededededede
+21	efzfezfzefzefPdfezdzedzedezdczdczedezd	dedededededede
+22	jkhgfdsfdgfhgj	dedededededede
+23	bvccfc	dedededededede
+24	cdceddce	dedededededede
 \.
 
 
@@ -573,6 +597,31 @@ COPY public.movie_app_movie_actors (id, movie_id, actor_id) FROM stdin;
 2	2	1
 3	2	2
 4	3	2
+5	4	1
+6	5	1
+7	6	1
+8	7	1
+9	4	2
+10	5	2
+11	6	2
+12	7	2
+13	8	2
+14	9	2
+15	10	2
+16	11	2
+17	12	2
+18	13	2
+19	14	2
+20	15	2
+21	16	2
+22	17	2
+23	18	2
+24	19	2
+25	20	2
+26	21	2
+27	22	2
+28	23	2
+29	24	2
 \.
 
 
@@ -647,7 +696,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 9, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: totolastico
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 19, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 21, true);
 
 
 --
@@ -661,14 +710,14 @@ SELECT pg_catalog.setval('public.movie_app_actor_id_seq', 2, true);
 -- Name: movie_app_movie_actors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: totolastico
 --
 
-SELECT pg_catalog.setval('public.movie_app_movie_actors_id_seq', 4, true);
+SELECT pg_catalog.setval('public.movie_app_movie_actors_id_seq', 29, true);
 
 
 --
 -- Name: movie_app_movie_id_seq; Type: SEQUENCE SET; Schema: public; Owner: totolastico
 --
 
-SELECT pg_catalog.setval('public.movie_app_movie_id_seq', 3, true);
+SELECT pg_catalog.setval('public.movie_app_movie_id_seq', 25, true);
 
 
 --
