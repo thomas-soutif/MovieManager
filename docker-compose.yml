@@ -44,11 +44,11 @@ services:
    container_name: moviemanager_vuesjs_app
    volumes:
      - ./vuejs_project/movie_manager_app/:/app/
-   command: sh -c "/launch_vuesjs_dev" #for now we launch the dev environnement
+   command: sh -c "/launch_vuesjs_prod" #production environment
    tty: true
    ports:
-      - '8100:8080'
+      - '8080:8080'
    expose:
-     - "8100" #ports for dev for now
+     - "8080" #ports for prod server
 volumes:
   pg-data:

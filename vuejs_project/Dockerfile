@@ -7,5 +7,8 @@ WORKDIR $AppPath
 COPY ./movie_manager_app/package*.json $AppPath/
 RUN npm install && npm install -g http-server
 
-ADD launch_vuesjs_dev.sh /launch_vuesjs_dev
-RUN chmod +x /launch_vuesjs_dev
+COPY ./movie_manager_app/ $AppPath/
+RUN npm run build
+
+ADD launch_vuesjs_prod.sh /launch_vuesjs_prod
+RUN chmod +x /launch_vuesjs_prod
