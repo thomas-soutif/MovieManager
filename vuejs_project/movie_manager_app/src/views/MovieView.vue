@@ -5,7 +5,7 @@
         max-width="400"
         tile>
       <v-card-actions>
-        <v-btn :to="prevRoute.path">
+        <v-btn v-if="prevRoute" :to="prevRoute.path">
           <v-icon>mdi-arrow-left</v-icon>
           <v-spacer></v-spacer>
 
