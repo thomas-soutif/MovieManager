@@ -12,6 +12,7 @@
         <v-list-item-title>{{movie.getTitle()}}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
+
   </v-card>
   <v-pagination
       v-model="page"
@@ -30,7 +31,7 @@ import axios from 'axios';
     name: 'Home',
     data: () => ({
       movies: [],
-      limit: 2,
+      limit: 5,
       movieService: null,
       page: 1,
     }),
