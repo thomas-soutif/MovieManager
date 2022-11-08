@@ -1,15 +1,15 @@
 import ActorModel from "@/models/ActorModel";
 
 class MovieModel{
-    constructor(movie_array) {
-        if (movie_array == null) {
+    constructor(movie_struct) {
+        if (movie_struct == null) {
             return;
         }
-        this.id = movie_array.id;
-        this.title = movie_array.title;
-        this.description = movie_array.description;
-        this.actors = movie_array.actors.map(actor => new ActorModel(actor));
-        this.averageGrade = movie_array.average_grade;
+        this.id = movie_struct.id;
+        this.title = movie_struct.title;
+        this.description = movie_struct.description;
+        this.actors = movie_struct.actors.map(actor => new ActorModel(actor));
+        this.averageGrade = movie_struct.average_grade;
     }
     getActors(){
         return this.actors;

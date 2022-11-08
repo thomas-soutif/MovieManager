@@ -1,11 +1,11 @@
 class ActorModel {
-    constructor(actor_array) {
-        if (actor_array == null) {
+    constructor(actor_struct) {
+        if (actor_struct == null) {
             return;
         }
-        this.id = actor_array.id
-        this.first_name = actor_array.first_name
-        this.last_name = actor_array.last_name
+        this.id = actor_struct.id
+        this.first_name = actor_struct.first_name
+        this.last_name = actor_struct.last_name
     }
 
     getFullName() {

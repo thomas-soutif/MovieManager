@@ -2,14 +2,13 @@ import MovieModel from "@/models/MovieModel";
 
 
 class ReviewModel{
-    constructor(review_array) {
-        // If review_array is null, ignore
-        if (review_array == null) {
+    constructor(review_struct) {
+        if (review_struct == null) {
             return;
         }
-        this.id = review_array.id;
-        this.movie = new MovieModel(review_array.movie);
-        this.grade = review_array.grade;
+        this.id = review_struct.id;
+        this.movie = new MovieModel(review_struct.movie);
+        this.grade = review_struct.grade;
     }
 }
 
