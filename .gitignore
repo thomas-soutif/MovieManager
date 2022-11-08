@@ -1,3 +1,4 @@
 django/**/__*__
 /vuejs_project/movie_manager_app/node_modules/
 /vuejs_project/movie_manager_app/public/
+/vuejs_project/movie_manager_app/dist/
