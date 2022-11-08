@@ -10,7 +10,7 @@
         </v-btn>
       </v-card-actions>
       <Movie v-if="movie" :title="movie.title" :description="movie.description"
-             :actors="movie.getAllFullNameActors()"></Movie>
+             :actors="movie.getAllFullNameActors()" :averageGrade="movie.getAverageGrade()"></Movie>
 
 
     </v-card>

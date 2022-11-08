@@ -23,6 +23,13 @@ import Vue from 'vue';
     </v-list-item-content>
   </v-list-item>
 
+  <v-list-item forth-line>
+    <v-list-item-content>
+      <v-list-item-title>Notes moyennes</v-list-item-title>
+      <v-list-item-subtitle>{{ averageGrade }}</v-list-item-subtitle>
+    </v-list-item-content>
+  </v-list-item>
+
 
 </div>
 
@@ -33,7 +40,7 @@ import Vue from 'vue';
 <script>
 export default {
   name: "Movie",
-  props:['title','description','actors'],
+  props:['title','description','actors','averageGrade'],
   data: () => ({
 
   }),
