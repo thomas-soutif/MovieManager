@@ -1,17 +1,20 @@
 <template>
   <div>
     <v-card
-    class="ma-auto"
-    max-width="400"
-    tile>
+        class="ma-auto"
+        max-width="400"
+        tile>
       <v-card-actions>
-        <v-btn>
-            <v-icon @click="goPrevPage">mdi-arrow-left</v-icon>
+        <v-btn :to="prevRoute.path">
+          <v-icon>mdi-arrow-left</v-icon>
+          <v-spacer></v-spacer>
+
         </v-btn>
       </v-card-actions>
-      <Movie v-if="movie" :title="movie.title" :description="movie.description"
-             :actors="movie.getAllFullNameActors()" :averageGrade="movie.getAverageGrade()"></Movie>
+      <Movie v-if="movie" :movie=movie
+        @movie-details-update="updateMovieDetails">
 
+      </Movie>
 
     </v-card>
 
@@ -43,21 +46,27 @@ export default {
       //If the movie have not been found in the store, we get it from the API
       let movie_service = new MovieService();
       movie_service.getMovie(this.movieId).then((movie) => {
-          this.movie = movie;
-        }).catch((err) => {
-          if (err.response.status === 404) {
-            //If the movie have not been found in the API, we redirect to the home page
-            this.$router.push({name: 'home'});
-          }else{
-            //We could display that an technical error has occurred
-          }
-        });
+        this.movie = movie;
+      }).catch((err) => {
+        if (err.response.status === 404) {
+          //If the movie have not been found in the API, we redirect to the home page
+          this.$router.push({name: 'home'});
+        } else {
+          //We could display that an technical error has occurred
+        }
+      });
     }
 
   },
   methods: {
-    goPrevPage : function () {
-      this.$router.push(this.prevRoute.path);
+    updateMovieDetails: function (payload) {
+      let movie_service = new MovieService();
+      movie_service.patchMovieAttributes(this.movie.id, payload.name, payload.value).then((movie) => {
+        this.movie = movie
+      }).catch((err) => {
+        console.log(err.response)
+      });
+
     }
   }
 }

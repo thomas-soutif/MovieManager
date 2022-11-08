@@ -31,6 +31,20 @@ class MoviesService {
         });
     }
 
+    patchMovieAttributes(id, name,value){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await axios.patch(self.url + "/" + id +'/', {
+                    [name]: value
+                });
+                // We cast the data with our own MovieModel class
+                resolve(new MovieModel(res.data))
+            }catch (err){
+                reject(err)
+            }
+        });
+    }
+
 }
 
 export default MoviesService

@@ -1,38 +1,52 @@
 import Vue from 'vue';
 <template>
 
-<div>
+  <div>
 
-<v-list-item>
-    <v-list-item-content>
-      <v-list-item-title>{{title}}</v-list-item-title>
-    </v-list-item-content>
-  </v-list-item>
+    <div v-for="item in items">
+      <v-list-item item.listItemPosition>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item-subtitle>
 
-  <v-list-item two-line>
-    <v-list-item-content>
-      <v-list-item-title>Description</v-list-item-title>
-      <v-list-item-subtitle>{{ description }}</v-list-item-subtitle>
-    </v-list-item-content>
-  </v-list-item>
-
-  <v-list-item three-line>
-    <v-list-item-content>
-      <v-list-item-title>Acteurs</v-list-item-title>
-      <v-list-item-subtitle>{{ actors }}</v-list-item-subtitle>
-    </v-list-item-content>
-  </v-list-item>
-
-  <v-list-item forth-line>
-    <v-list-item-content>
-      <v-list-item-title>Notes moyennes</v-list-item-title>
-      <v-list-item-subtitle>{{ averageGrade }}</v-list-item-subtitle>
-    </v-list-item-content>
-  </v-list-item>
+            <div class="d-flex">
+              <v-text-field
+                  v-model="movie[item.localProp]"
+                  append-icon="mdi-validate"
+                  label=""
+                  single-line
+                  :disabled=item.disabled
+              >
+              </v-text-field>
+              <v-btn v-if="!item.disabled" dark small color="green"
+                     @click="emitMovieDetailsUpdate(item.apiProp,movie[item.localProp])">
+                <v-icon>mdi-content-save</v-icon>
+              </v-btn>
+            </div>
 
 
-</div>
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </div>
 
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title>Acteurs</v-list-item-title>
+        <v-list-item-subtitle>
+          <v-text-field
+              v-model="movie.getAllFullNameActors()"
+              label=""
+              single-line
+              disabled
+          >
+          </v-text-field>
+        </v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+
+
+  </div>
 
 
 </template>
@@ -40,10 +54,40 @@ import Vue from 'vue';
 <script>
 export default {
   name: "Movie",
-  props:['title','description','actors','averageGrade'],
+  props: ['movie'],
   data: () => ({
-
+    items: [
+      {
+        title: 'Title',
+        icon: 'mdi-view-dashboard',
+        localProp: 'title',
+        apiProp: 'title',
+        listItemPosition: 'one-line',
+        disabled: true
+      },
+      {
+        title: 'Description',
+        icon: 'mdi-view-dashboard',
+        localProp: 'description',
+        apiProp: 'description',
+        listItemPosition: 'two-line'
+      },
+      {
+        title: 'Average Grade',
+        icon: 'mdi-view-dashboard',
+        localProp: 'averageGrade',
+        listItemPosition: 'three-line',
+        disabled: true
+      },
+    ],
   }),
+  created() {
+  },
+  methods: {
+    emitMovieDetailsUpdate: function (name, value) {
+      this.$emit('movie-details-update', {'name': name, 'value': value});
+    }
+  },
 
 
 }
