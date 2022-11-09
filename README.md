@@ -33,6 +33,10 @@ A makefile is available to help you building your vuejs server development.
 make vuejs-dev
 ```
 
+### Dump of the database
+
+When the postgresql container start, a migration will be done automatically to apply the dump located in `db/dump_db.sql`
+
 ## Architecture
 
 ### Relations between the model api and the front code
