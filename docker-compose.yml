@@ -44,6 +44,7 @@ services:
    container_name: moviemanager_vuesjs_app
    volumes:
      - ./vuejs_project/movie_manager_app/:/app/
+     - vuejs-dist:/app/dist/
    command: sh -c "/launch_vuesjs_prod" #production environment
    tty: true
    ports:
@@ -51,4 +52,5 @@ services:
    expose:
      - "8080" #ports for prod server
 volumes:
-  pg-data:
+    pg-data:
+    vuejs-dist:
