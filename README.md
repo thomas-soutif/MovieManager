@@ -11,7 +11,7 @@ The application is divided into 3 containers :
 
 ### Docker-compose
 ```bash
-docker-compose up --build
+docker-compose up -d --build
 ```
 ## Usage
 
