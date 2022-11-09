@@ -54,3 +54,30 @@ class MovieModel{
 This object is then use in all vuejs page, so be sure to update these model and use them, to keep a link between the api and your front code.
 An alternative would be to use `interface` by using typescript, but this is not the case in this project.
 
+An advantage by using theses custom model, is the possibility to create getter and setter to reduce the code duplication and help maintening good code :
+```js
+let movie_model = new MovieModel(res.data)
+let names_of_actors = movie_model.getAllFullNameActors()
+console.log(names_of_actors) 
+// Charlie Chaplin, Tom Hanks
+```
+
+### Services for consume the API
+
+I created also a service architecture, that will help you maintain and adding new api easily.
+```js
+let movie_service = new MovieService();
+movie_service.getMovie(id).then(movie_model => {
+  // the movie_model is a MovieModel object
+  });
+```
+```js
+class MoviesService {
+  constructor(limit) {
+          self.url = HOST + 'api/movies';
+          self.limit = limit;
+      }
+  getMovie(id){
+    [...]
+  }
+}
