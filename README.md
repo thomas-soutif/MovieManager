@@ -19,6 +19,12 @@ The website by default will be available at `localhost:8080/`
 
 The API is consumed by the website, you can access it by default at `localhost:8005`
 
+### API endpoint
+To change the host of the API in your website, changed the `HOST` value in `movie_manager_app/services.config.js`
+```js
+let HOST = "http://localhost:8005/"
+```
+
 ## Framework uses 
 
 `Django`, `Django Rest Framework` , `Vue`, `Vue router`, `Vuex`, `Vuetify`
