@@ -1,11 +1,11 @@
 # MovieManager
 
-A Fullstack application write with Django and VueJs, that allow to add reviews on movies.
+MovieManager is an application writen in Django and VueJs, allowing users to do movie reviews.
 
 ## Installation
 
 The application is divided into 3 containers : 
-- API (a Django server)
+- API (Django server)
 - Database (postgres)
 - Website Production (Vuejs)
 
@@ -17,7 +17,7 @@ docker-compose up -d --build
 
 The website by default will be available at `localhost:8080/`
 
-The API is consume by the website, you can access it by default at `localhost:8005`
+The API is consumed by the website, you can access it by default at `localhost:8005`
 
 ## Framework uses 
 
@@ -35,13 +35,13 @@ make vuejs-dev
 
 ### Dump of the database
 
-When the postgresql container start, a migration will be done automatically to apply the dump located in `db/dump_db.sql`
+When the postgresql container starts, a migration will be done automatically to apply the dump located in `db/dump_db.sql`
 
 ## Architecture
 
-### Relations between the model api and the front code
+### Relations between model API and front code
 
-When the website received data's from the DRF API, a cast is being effectued to custom model class in javascript.
+When the website received datas from the DRF API, a cast is made to a custom model class in javascript.
 ```js
 const res = await axios.get(/api/movie/ + id);
 let movie_model = new MovieModel(res.data)
@@ -55,10 +55,10 @@ class MovieModel{
   }
 }
 ```
-This object is then use in all vuejs page, so be sure to update these model and use them, to keep a link between the api and your front code.
-An alternative would be to use `interface` by using typescript, but this is not the case in this project.
+This object is then used in all vuejs page, so be sure to update these models and to use them, to keep a link between the API and your front code.
+An alternative would be to use `interface` by using Typescript, but this is not the case in this project.
 
-An advantage by using theses custom model, is the possibility to create getter and setter to reduce the code duplication and help maintening good code :
+An advantage by using theses custom models is the possibility to create getters and setters to reduce code duplications and help maintening good code :
 ```js
 let movie_model = new MovieModel(res.data)
 let names_of_actors = movie_model.getAllFullNameActors()
@@ -68,7 +68,7 @@ console.log(names_of_actors)
 
 ### Services for consume the API
 
-I created also a service architecture, that will help you maintain and adding new api easily.
+I also created a service architecture, that will help you maintaining and adding new API easily.
 ```js
 let movie_service = new MovieService();
 movie_service.getMovie(id).then(movie_model => {
