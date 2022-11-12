@@ -1,10 +1,8 @@
 <template>
   <v-app id="inspire">
 
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
+
+    <v-navigation-drawer v-model="drawer" app>
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
@@ -18,16 +16,8 @@
 
       <v-divider></v-divider>
 
-      <v-list
-        dense
-        nav
-      >
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :to="item.to"
-          link
-        >
+      <v-list dense nav>
+        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -46,6 +36,16 @@
     </v-app-bar>
 
     <v-main>
+      <notificationGroup group="success">
+        <div class="alert-box">
+          <notification v-slot="{ notifications }">
+            <div
+              v-for="notification in notifications" :key="notification.id" >
+              <v-alert type="success" :icon="notification.icon">{{ notification.text }}</v-alert>
+            </div>
+          </notification>
+        </div>
+      </notificationGroup>
       <!--  -->
       <router-view></router-view>
     </v-main>
@@ -53,13 +53,27 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      drawer: null,
-      items: [
-          { title: 'All Reviews', icon: 'mdi-view-dashboard', to: "/" },
-          { title: 'About', icon: 'mdi-help-box', to: "/about" },
-        ],
-    }),
-  }
+export default {
+  data: () => ({
+    drawer: null,
+    items: [
+      { title: 'All Reviews', icon: 'mdi-view-dashboard', to: "/" },
+      { title: 'About', icon: 'mdi-help-box', to: "/about" },
+    ],
+  }),
+}
 </script>
+
+<style scoped>
+.alert-box {
+  margin: 20px;
+  z-index: 999;
+  position: absolute;
+  top:0;
+  right:0;
+
+}
+.v-alert {
+  z-index : 999;
+}
+</style>

@@ -36,7 +36,8 @@ export default {
     movieId: null,
     movie: null,
     prevRoute: null,
-    movie_service: new MovieService()
+    movie_service: new MovieService(),
+    notifications: [],
   }),
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -58,6 +59,14 @@ export default {
     updateMovieDetails: function (payload) {
       this.movie_service.patchMovieAttributes(this.movie.id, payload.name, payload.value).then((movie) => {
         this.movie = movie
+        this.$notify(
+          {
+            group: "success",
+            text: "The attribute " + payload.name + " have been updated.",
+            icon: "mdi-content-save",
+          },
+          4000
+        );
         //Update the movie in the store
         this.$store.dispatch('updateMovie', movie)
       }).catch((err) => {
@@ -69,6 +78,14 @@ export default {
       let review_service = new ReviewService();
       review_service.postGradeForMovie(this.movie.id, grade).then((review) => {
         this.getMovie(this.movieId)
+        this.$notify(
+          {
+            group: "success",
+            text: "You have rated the movie with a " + grade + " !",
+            icon: "mdi-check",
+          },
+          4000
+        );
       }).catch((custom_errors) => {
         // custom_errors : ApiErrorHandler[]
         custom_errors.forEach((custom_error) => {
