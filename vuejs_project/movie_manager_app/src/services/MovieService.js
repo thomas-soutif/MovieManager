@@ -40,6 +40,7 @@ class MoviesService {
                 // We cast the data with our own MovieModel class
                 resolve(new MovieModel(res.data))
             }catch (err){
+               
                 reject(err)
             }
         });

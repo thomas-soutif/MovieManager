@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-card
-        class="ma-auto"
-        max-width="400"
-        tile>
+    <v-card class="ma-auto" max-width="400" tile>
       <v-card-actions>
         <v-btn v-if="prevRoute" :to="prevRoute.path">
           <v-icon>mdi-arrow-left</v-icon>
@@ -11,19 +8,17 @@
 
         </v-btn>
       </v-card-actions>
-      <Movie v-if="movie" :movie=movie
-        @movie-details-update="updateMovieDetails">
+      <Movie v-if="movie" :movie=movie @movie-details-update="updateMovieDetails">
 
       </Movie>
 
     </v-card>
-    <br/>
-    <v-card class="ma-auto"
-        max-width="400"
-        tile>
+    <br />
+    <v-card class="ma-auto" max-width="400" tile>
 
       <v-card-title> Ajouter une note </v-card-title>
-        <AddReview @review-submitted="addAReview"></AddReview>
+      <AddReview @review-submitted="addAReview"></AddReview>
+
     </v-card>
   </div>
 </template>
@@ -36,12 +31,12 @@ import ReviewService from "@/services/ReviewService";
 
 export default {
   name: "MovieView",
-  components: {Movie, AddReview},
+  components: { Movie, AddReview },
   data: () => ({
     movieId: null,
     movie: null,
     prevRoute: null,
-    movie_service : new MovieService()
+    movie_service: new MovieService()
   }),
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -59,6 +54,7 @@ export default {
 
   },
   methods: {
+
     updateMovieDetails: function (payload) {
       this.movie_service.patchMovieAttributes(this.movie.id, payload.name, payload.value).then((movie) => {
         this.movie = movie
@@ -69,23 +65,30 @@ export default {
       });
 
     },
-    addAReview : function (grade){
+    addAReview: function (grade) {
       let review_service = new ReviewService();
-      review_service.postGradeForMovie(this.movie.id,grade).then((review) => {
+      review_service.postGradeForMovie(this.movie.id, grade).then((review) => {
         this.getMovie(this.movieId)
+      }).catch((custom_errors) => {
+        // custom_errors : ApiErrorHandler[]
+        custom_errors.forEach((custom_error) => {
+          // We're going to dispatch the error (that is an ApiErrorHandler object) to the store, that will be used by the component in charge of displaying the error
+          this.$store.dispatch('showError', custom_error)
+        })
+
+        console.log(this.$store.state.errors_api_handler)
+
+      });
+    },
+    getMovie: function (id) {
+      let movie_service = new MovieService();
+      movie_service.getMovie(id).then((movie) => {
+        this.movie = movie;
+        this.updateMovieInStore(this.movie)
       }).catch((err) => {
         console.log(err)
       });
     },
-    getMovie: function (id){
-      let movie_service = new MovieService();
-        movie_service.getMovie(id).then((movie) => {
-          this.movie = movie;
-          this.updateMovieInStore(this.movie)
-        }).catch((err) => {
-          console.log(err)
-        });
-      },
     updateMovieInStore: function (movie) {
       this.$store.dispatch('updateMovie', movie);
     }

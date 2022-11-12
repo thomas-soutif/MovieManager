@@ -1,5 +1,6 @@
 import axios from 'axios';
 import HOST from "../../services.config";
+import ApiErrorDispatcher from "@/utils/ExceptionsHandler/ApiErrorDispatcher";
 
 class ReviewService{
     constructor(limit) {
@@ -19,7 +20,10 @@ class ReviewService{
                 });
                 resolve(res.data)
             }catch (err){
-                reject(err)
+                // Get a list of ApiErrorHanler object
+                let custom_errors = new ApiErrorDispatcher(err.response.status,err.response);
+                console.log(custom_errors);
+                reject(custom_errors)
             }
         });
 
