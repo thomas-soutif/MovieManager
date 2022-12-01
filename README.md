@@ -91,3 +91,77 @@ class MoviesService {
     [...]
   }
 }
+```
+### API error handler 
+
+I implemented a custom errors handler for the front to display errors from the API.
+A dispatcher is call first to return the abstract `ApiErrorHander` object, that have many children that can inherit from it.
+
+```js
+// Get a list of ApiErrorHanler object
+let custom_errors = new ApiErrorDispatcher(err.response.status,err.response);
+```
+
+For example, when patching a review , a list of `Api400Handler` objects are return if a badrequest error occured.
+
+I implemented also a store dispatcher for the errors , that will help propagate the error into sub component. An implementation have been make
+when adding a review. 
+For exemple, when you're adding a review, if a bad request error occur from the API :
+
+```js
+.catch((custom_errors) => {
+    // custom_errors : ApiErrorHandler[]
+    custom_errors.forEach((custom_error) => {
+      // We're going to dispatch the error (that is an ApiErrorHandler object) to the store, that will be used by the component in charge of displaying the error
+      this.$store.dispatch('showError', custom_error)
+    })
+ ```
+ 
+As you can see, the bad request error (the class `Api400Handler`) is not propagate directly with his class, but by his abstract class that it herits. (the `ApiErrorHandler`) 
+That mean you can dispatch to the store your own custom error class !
+
+Now, always with our exemple of adding a review, let's see how a component listen the store to know what error to display
+
+The component `AddAReview` listen to the store to display a bunch of erros related to the "grade" field, and the erros are
+propagated from the `MovieView` view by passing to the store.
+
+```html
+<div v-for="error in $store.getters.getBadRequestErrors('grade')">
+      <v-alert type="error" border="left" elevation="10" color="red" dismissible>
+        {{ error.getErrorMessage() }}
+      </v-alert>
+</div>
+```
+
+The method `getBadRequestErrors` has been custom in the store to be able to find in the list of error (always in the store), those who are BadRequest type (that mean a class of `Api400Handler`).
+There is here a part of the code of this function if you want to understand more how it works (you would like to extend this architectur and add your own custom function !)
+
+```js
+const find_errors = state.errors_api_handler.filter(error => error.isBadRequest()).[...]
+```
+We filter only on the objects that are BadRequest(). Remember that here , an "error" is an abstract `ApiErrorHanler`
+Let's see a part of our `Api400Handler` and `ApiErrorHandler` class
+
+```js
+class Api400Handler extends ApiErrorHandler {
+  constructor(response, attributeName, errorMessage) {
+    super(400,response);
+    [...]
+  }
+}
+
+class ApiErrorHandler {
+  constructor(code,response) {
+    this.code = code;
+    this.response = response;
+  }
+  isBadRequest() {
+    return this.code === 400;
+  }
+}
+```
+
+And this is how we can filter with the method isBadRequest(), keep that implementation in mind, and I hope it will help you finding new ways of expending it for your own use! 
+
+It took me quite a while and some rewriting before deciding to keep all these arhcitectur, they can be improved for sure, but I'm quite proud of being able to propose you my own version and with a documentation !
+
