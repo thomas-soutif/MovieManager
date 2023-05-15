@@ -163,5 +163,5 @@ class ApiErrorHandler {
 
 And this is how we can filter with the method isBadRequest(), keep that implementation in mind, and I hope it will help you finding new ways of expending it for your own use! 
 
-It took me quite a while and some rewriting before deciding to keep all these arhcitectur, they can be improved for sure, but I'm quite proud of being able to propose you my own version and with a documentation !
+It took me quite a while and some rewriting before deciding to keep all these architectur, they can be improved for sure, but I'm quite proud of being able to propose you my own version and with a documentation !
 
