@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:18-alpine
 
 ENV AppPath=/app
 RUN mkdir -p $AppPath
