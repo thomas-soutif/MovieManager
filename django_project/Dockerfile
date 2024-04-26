@@ -1,17 +1,19 @@
-FROM python:3.11.0-bullseye
+FROM python:3.11-slim-buster
 ENV AppPath=/app
 RUN mkdir -p $AppPath
-WORKDIR $AppPath
 
+RUN pip install poetry
+
+ENV POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=1 \
+    POETRY_VIRTUALENVS_CREATE=1 \
+    POETRY_CACHE_DIR=/tmp/poetry_cache
+
+WORKDIR $AppPath
 COPY ./src/poetry.lock $AppPath
 COPY ./src/pyproject.toml $AppPath
-RUN curl -sSL https://install.python-poetry.org/ | python - \
-&& echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.profile \
-&& echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc \
-&& export PATH="$HOME/.local/bin:$PATH" \
-&& pip install -U pip \
-&& poetry config virtualenvs.create false \
-&& poetry install
+RUN poetry config virtualenvs.create false
+RUN --mount=type=cache,target=$POETRY_CACHE_DIR poetry install --no-dev --no-root
 
 # Add docker-compose-wait tool -------------------
 ENV WAIT_VERSION 2.7.2
